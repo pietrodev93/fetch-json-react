@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import moment from 'moment';
 
 class Posts extends React.Component {
   constructor() {
@@ -34,27 +35,24 @@ class Posts extends React.Component {
       listStyle: "none",
       padding: 10
     };
+
     let posts = this.state.Posts.map(post =>
       <li key={post.id} style={listStyle}>
-        <h3>
-          -{" "}
-          <a
-            href={post.link}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            {post.title.rendered}
-          </a>
-        </h3>
-        <p>
-          {post.excerpt.rendered}
-        </p>
-        <span style={{ color: "#777777" }}>
-          Scritto alle: {post.date}
-        </span>
+        <a href={post.link} style={{ textDecoration: "none", color: "black" }}>
+          <h3>
+            - {post.title.rendered}
+          </h3>
+          <p dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
+          <span style={{ color: "#777777" }}>
+            Scritto il: {moment(post.date).format('DD/MM/YYYY')}
+          </span>
+        </a>
       </li>
     );
+
     return (
       <div className="Post" style={PostsStyle}>
+
         <h1 style={{ textAlign: "center" }}>Last News</h1>
         <ul>
           {posts}
