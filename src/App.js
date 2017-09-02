@@ -11,7 +11,7 @@ class Posts extends React.Component {
     };
   }
   componentDidMount() {
-    fetch("http://www.creatiwa.it/wp-json/wp/v2/posts")
+    fetch("https://jsonplaceholder.typicode.com/posts/")
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -36,16 +36,26 @@ class Posts extends React.Component {
       padding: 10
     };
 
+    const dataStyle = {
+      color: "#777777",
+      float: "left"
+    }
+    const userStyle = {
+      color: "#777",
+      float: "right"
+    }
+
     let posts = this.state.Posts.map(post =>
       <li key={post.id} style={listStyle}>
         <a href={post.link} style={{ textDecoration: "none", color: "black" }}>
           <h3>
-            - {post.title.rendered}
+            - {post.title}
           </h3>
-          <p dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
-          <span style={{ color: "#777777" }}>
+          <p dangerouslySetInnerHTML={{ __html: post.body }} />
+          <span style={dataStyle}>
             Scritto il: {moment(post.date).format('DD/MM/YYYY')}
           </span>
+          <span style={userStyle}>ID User: {post.userId}</span>
         </a>
       </li>
     );
